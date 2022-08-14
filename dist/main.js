@@ -16,7 +16,7 @@
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n\r\nconsole.log(three__WEBPACK_IMPORTED_MODULE_0__)\n\n//# sourceURL=webpack://space_invaders_three_js/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ \"./node_modules/three/build/three.module.js\");\n\r\n\r\nconsole.log(three__WEBPACK_IMPORTED_MODULE_0__)\n\n//# sourceURL=webpack://space_invaders_three_js/./src/index.js?");
 
 /***/ }),
 
