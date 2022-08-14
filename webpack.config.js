@@ -10,7 +10,9 @@ module.exports = {
 
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].js'
+        filename: '[name].js',
+        clean: true,
+        assetModuleFilename: '[name][ext]'
     },
 
     devServer: {
@@ -22,6 +24,15 @@ module.exports = {
         hot: true,
         compress: true,
         historyApiFallback: true
+    },
+
+    module: {
+        rules: [
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                
+            }
+        ]
     },
 
     plugins: [
