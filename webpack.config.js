@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     mode: 'development',
-    
+
     entry: {
         main: path.resolve(__dirname, 'src/index.js')
     },
@@ -28,10 +28,40 @@ module.exports = {
 
     module: {
         rules: [
+            
+            // JS
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
+            },
+
+            // CSS
+            {
+                test: /\.scss$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
+            },
+            
+            // Images
             {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
-                
-            }
+                use: [{
+                    loader: 'file-loader',
+                    // options: {
+                    //     outputPath: 'assets/images/'
+                    // }
+                }]
+
+            },
         ]
     },
 
