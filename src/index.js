@@ -1,4 +1,8 @@
 import * as THREE from 'three'
+import {
+    OrbitControls
+} from 'three/examples/jsm/controls/OrbitControls.js'
+
 import './styles/main.scss'
 
 import './scripts/actions/player_movement'
@@ -18,25 +22,69 @@ const sizes = {
 
 // ------------------------- Camera -------------------------
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
-camera.position.z = 3
+camera.position.set(1, 1, 2)
 scene.add(camera)
+
+// ------------------------- Lights -------------------------
+// Ambient
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
+scene.add(ambientLight)
+
+// Point
+const pointLight = new THREE.PointLight(0xffffff, 0.5)
+pointLight.position.x = 2
+pointLight.position.y = 3
+pointLight.position.z = 4
+scene.add(pointLight)
 
 // ------------------------- Object -------------------------
 const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({
-    color: 0xff0000
-})
+const material = new THREE.MeshLambertMaterial()
 const mesh = new THREE.Mesh(geometry, material)
 
 scene.add(mesh)
 
 // ------------------------- Renderer -------------------------
 const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
+    canvas: canvas,
+    antialias: true,
+    alpha: true
 })
 
 renderer.setSize(sizes.width, sizes.height)
 renderer.render(scene, camera)
+
+// ------------------------- Controls -------------------------
+const controls = new OrbitControls(camera, renderer.domElement)
+controls.autoRotate = true
+controls.autoRotateSpeed = -0.5
+controls.enableDamping = true
+controls.enableZoom = false
+
+// ------------------------- Clock -------------------------
+const clock = new THREE.Clock()
+
+// ------------------------- Tick function -------------------------
+const tick = () => {
+    const elapsedTime = clock.getElapsedTime()
+
+    // Render
+    renderer.render(scene, camera)
+
+    // Controls
+    controls.update()
+    
+    // Call tick again on the next frame
+    window.requestAnimationFrame(tick)
+}
+tick()
+
+// // ----------------- Animation -----------------
+// function animate() {
+//     requestAnimationFrame(animate)
+//     renderer.render(scene, camera)
+// }
+// animate()
 
 // ------------------------- Resize window -------------------------
 window.addEventListener('resize', () => {
@@ -52,23 +100,4 @@ window.addEventListener('resize', () => {
     // Update renderer
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-})
-
-// ------------------------- Fullscreen window -------------------------
-window.addEventListener('dblclick', () => {
-    const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement
-
-    if (!fullscreenElement) {
-        if (canvas.requestFullscreen) {
-            canvas.requestFullscreen()
-        } else if (canvas.webkitRequestFullscreen) {
-            canvas.webkitRequestFullscreen()
-        }
-    } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen()
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen()
-        }
-    }
 })
