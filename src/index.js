@@ -1,6 +1,9 @@
 import * as THREE from 'three'
 import './styles/main.scss'
 
+import './scripts/actions/player_movement'
+import './scripts/sprites/player_1'
+
 // ------------------------- Canvas -------------------------
 const canvas = document.querySelector('canvas.webgl')
 

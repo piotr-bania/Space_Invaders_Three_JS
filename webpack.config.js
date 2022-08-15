@@ -5,7 +5,9 @@ module.exports = {
     mode: 'development',
 
     entry: {
-        main: path.resolve(__dirname, 'src/index.js')
+        main: path.resolve(__dirname, 'src/index.js'),
+        player_1: path.resolve(__dirname, 'src/scripts/sprites/player_1.js'),
+        player_movement: path.resolve(__dirname, 'src/scripts/actions/player_movement.js'),
     },
 
     output: {
