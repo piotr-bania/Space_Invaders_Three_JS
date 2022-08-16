@@ -15,7 +15,7 @@
   \************************************************/
 /***/ (() => {
 
-eval("\n\n//# sourceURL=webpack://space_invaders_three_js/./src/scripts/actions/player_movement.js?");
+eval("function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, \"prototype\", { writable: false }); return Constructor; }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar InputHandler = /*#__PURE__*/_createClass(function InputHandler() {\n  _classCallCheck(this, InputHandler);\n});\n\nvar Player = /*#__PURE__*/_createClass(function Player(game) {\n  _classCallCheck(this, Player);\n\n  this.game = game;\n});\n\nvar Projectile = /*#__PURE__*/_createClass(function Projectile() {\n  _classCallCheck(this, Projectile);\n});\n\nvar Game = /*#__PURE__*/_createClass(function Game() {\n  _classCallCheck(this, Game);\n});\n\n//# sourceURL=webpack://space_invaders_three_js/./src/scripts/actions/player_movement.js?");
 
 /***/ })
 

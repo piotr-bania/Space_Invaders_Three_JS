@@ -30,7 +30,7 @@ module.exports = {
 
     module: {
         rules: [
-            
+
             // JS
             {
                 test: /\.js$/,
@@ -52,7 +52,7 @@ module.exports = {
                     'sass-loader'
                 ]
             },
-            
+
             // Images
             {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
@@ -62,7 +62,17 @@ module.exports = {
                     //     outputPath: 'assets/images/'
                     // }
                 }]
+            },
 
+            // Models
+            {
+                test: /\.(glb|gltf|fbx|obj)$/,
+                use: [{
+                    loader: 'file-loader',
+                    // options: {
+                    //     outputPath: 'assets/models/'
+                    // }
+                }]
             },
         ]
     },
