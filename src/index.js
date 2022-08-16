@@ -43,17 +43,17 @@ const ambientLight = new THREE.AmbientLight(0x7161F5, 0.75)
 scene.add(ambientLight)
 
 // Point
-// const pointLight = new THREE.PointLight(0xff9000, 0.5)
-// pointLight.position.set(1, - 0.5, 1)
-// scene.add(pointLight)
+// const orangePointLight = new THREE.PointLight(0xcc6600, 1)
+// orangePointLight.position.set(1, - 0.5, 1)
+// scene.add(orangePointLight)
 
 // const sphereSize = 1;
-// const pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
+// const pointLightHelper = new THREE.PointLightHelper( orangePointLight, sphereSize );
 // scene.add( pointLightHelper )
 
 // Directional
-const directionalLight = new THREE.DirectionalLight(0x7161F5, 0.75)
-directionalLight.position.set(-0.25, 0.5, 0.25)
+const directionalLight = new THREE.DirectionalLight(0x03544e, 0.5)
+directionalLight.position.set(0, 0, 1)
 scene.add(directionalLight)
 
 // const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 1)
@@ -68,13 +68,13 @@ scene.add(hemisphereLight)
 // scene.add(hemisphereLightHelper)
 
 // ------------------------- HDRI -------------------------
-import hdri from './hdri/rooftop_night_2k.hdr'
+// import hdri from './hdri/rooftop_night_2k.hdr'
 
-new RGBELoader()
-    .load(hdri, function (texture) {
-        texture.mapping = THREE.EquirectangularReflectionMapping
-        scene.environment = texture
-    })
+// new RGBELoader()
+//     .load(hdri, function (texture) {
+//         texture.mapping = THREE.EquirectangularReflectionMapping
+//         scene.environment = texture
+//     })
 
 // ------------------------- Galaxy -------------------------
 const parameters = {}
@@ -129,6 +129,27 @@ const generateGalaxy = () => {
 }
 
 generateGalaxy()
+
+import cloud from './images/cloud.png'
+
+let cloudParticles = []
+let loader = new THREE.TextureLoader()
+loader.load(cloud, function (texture) {
+    const cloudGeo = new THREE.PlaneBufferGeometry(500, 500)
+    const cloudMaterial = new THREE.MeshLambertMaterial({
+        map: texture,
+        transparent: true
+    })
+
+    for (let p = 0; p < 50; p++) {
+        let cloud = new THREE.Mesh(cloudGeo, cloudMaterial)
+        cloud.position.set(Math.random() * window.innerHeight, Math.random() * window.innerWidth)
+        cloud.rotation.set(1.16, -0.12, Math.random() * 2 * Math.PI)
+        cloud.material.opacity = 0.55
+        cloudParticles.push(cloud)
+        scene.add(cloud)
+    }
+})
 
 // ------------------------- Object -------------------------
 const geometry = new THREE.BoxGeometry(1, 1, 1)
@@ -278,9 +299,13 @@ const clock = new THREE.Clock()
 // ------------------------- Tick function -------------------------
 const tick = () => {
     const elapsedTime = clock.getElapsedTime()
-    mesh2.position.z = Math.sin( elapsedTime * 0.25 ) * 0.5
-    mesh2.position.x = Math.cos( elapsedTime * 0.15 ) * 1
-    mesh2.position.y = - Math.cos( elapsedTime * 0.35 ) * 0.25
+    mesh2.position.z = Math.sin(elapsedTime * 0.25) * 0.5
+    mesh2.position.x = Math.cos(elapsedTime * 0.15) * 1
+    mesh2.position.y = -Math.cos(elapsedTime * 0.35) * 0.25
+
+    cloudParticles.forEach(p => {
+        p.rotation.z -= 0.001
+    })
 
     // Render
     renderer.render(scene, camera)
