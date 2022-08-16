@@ -201,11 +201,11 @@ renderer.setClearColor(fog)
 renderer.shadowMap.enabled = true
 
 // ------------------------- Controls -------------------------
-const controls = new OrbitControls(camera, renderer.domElement)
-controls.autoRotate = false
-controls.autoRotateSpeed = -1.5
-controls.enableDamping = true
-controls.enableZoom = false
+// const controls = new OrbitControls(camera, renderer.domElement)
+// controls.autoRotate = false
+// controls.autoRotateSpeed = -1.5
+// controls.enableDamping = true
+// controls.enableZoom = false
 
 // ------------------------- Player controls -------------------------
 document.onkeydown = function (e) {
@@ -235,7 +235,7 @@ const tick = () => {
     renderer.render(scene, camera)
 
     // Controls
-    controls.update()
+    // controls.update()
 
     // Call tick again on the next frame
     window.requestAnimationFrame(tick)
