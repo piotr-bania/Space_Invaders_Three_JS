@@ -58,9 +58,9 @@ module.exports = {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
                 use: [{
                     loader: 'file-loader',
-                    // options: {
-                    //     outputPath: 'assets/images/'
-                    // }
+                    options: {
+                        outputPath: 'assets/images/'
+                    }
                 }]
             },
 
@@ -69,10 +69,16 @@ module.exports = {
                 test: /\.(glb|gltf|fbx|obj)$/,
                 use: [{
                     loader: 'file-loader',
-                    // options: {
-                    //     outputPath: 'assets/models/'
-                    // }
+                    options: {
+                        outputPath: 'assets/models/'
+                    }
                 }]
+            },
+
+            // Url
+            {
+                test: /\.hdr$/,
+                use: "url-loader"
             },
         ]
     },
