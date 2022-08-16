@@ -20,7 +20,7 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 // ------------------------- Fog -------------------------
-const fog = new THREE.Fog('#07032E', 1, 13)
+const fog = new THREE.Fog('#07032E', 1, 10)
 scene.fog = fog
 
 // ------------------------- Sizes -------------------------
@@ -131,26 +131,67 @@ const generateGalaxy = () => {
 generateGalaxy()
 
 // ------------------------- Object -------------------------
-// const geometry = new THREE.BoxGeometry(1, 1, 1)
-// const material = new THREE.MeshPhysicalMaterial({
-//     color: 0x7161F5,
-//     metalness: 1,
-//     roughness: 0.5,
-//     transmission: 0.5,
-//     thickness: 0.5,
-// })
-// const mesh = new THREE.Mesh(geometry, material)
-// mesh.position.set(0, 0, 0)
+const geometry = new THREE.BoxGeometry(1, 1, 1)
+const material = new THREE.MeshPhysicalMaterial({
+    color: 0xF5D261,
+    metalness: 1,
+    roughness: 0.5,
+    transmission: 0.5,
+    thickness: 0.5,
+})
+const mesh = new THREE.Mesh(geometry, material)
+mesh.position.set(-3, -2, -1)
 
-// mesh.traverse(n => {
-//     if (n.isMesh) {
-//         n.castShadow = true
-//         n.receiveShadow = true
-//         if (n.material.map) n.material.map.anisotropy = 16
-//     }
+mesh.traverse(n => {
+    if (n.isMesh) {
+        n.castShadow = true
+        n.receiveShadow = true
+        if (n.material.map) n.material.map.anisotropy = 16
+    }
+})
+
+// Animation
+gsap.to(mesh.rotation, {
+    duration: 300,
+    delay: 0,
+    z: 5,
+    x: 3,
+    repeat: -1
+})
+
+scene.add(mesh)
+
+const geometry2 = new THREE.BoxGeometry(0.5, 0.5, 0.5)
+const material2 = new THREE.MeshPhysicalMaterial({
+    color: 0x61F570,
+    metalness: 0,
+    roughness: 1,
+    transmission: 0,
+    thickness: 1,
+})
+const mesh2 = new THREE.Mesh(geometry2, material2)
+mesh2.position.set(2, 2, -10)
+
+mesh2.traverse(n => {
+    if (n.isMesh) {
+        n.castShadow = true
+        n.receiveShadow = true
+        if (n.material.map) n.material.map.anisotropy = 16
+    }
+})
+
+// Animation
+// gsap.fromTo(mesh2.position, {
+//     z: -1
+// }, {
+//     z: 1,
+//     duration: 5,
+//     yoyo: true,
+//     ease: "sine.inOut",
+//     repeat: -1
 // })
 
-// scene.add(mesh)
+scene.add(mesh2)
 
 // ------------------------- Models -------------------------
 import model from './models/spaceship.glb'
@@ -158,8 +199,8 @@ import model from './models/spaceship.glb'
 let mars = new GLTFLoader()
 mars.load(model, function (gltf) {
     mars = gltf.scene
-    gltf.scene.scale.set(0.25, 0.25, 0.25)
-    gltf.scene.position.set(0, -5, -2)
+    gltf.scene.scale.set(0.15, 0.15, 0.15)
+    gltf.scene.position.set(0, -4, 0)
     gltf.scene.rotation.set(1.5, 0, 0)
 
     mars.traverse(n => {
@@ -201,27 +242,34 @@ renderer.setClearColor(fog)
 renderer.shadowMap.enabled = true
 
 // ------------------------- Controls -------------------------
-// const controls = new OrbitControls(camera, renderer.domElement)
-// controls.autoRotate = false
-// controls.autoRotateSpeed = -1.5
-// controls.enableDamping = true
-// controls.enableZoom = false
+const controls = new OrbitControls(camera, renderer.domElement)
+controls.autoRotate = false
+controls.enableDamping = true
+controls.enableZoom = false
 
 // ------------------------- Player controls -------------------------
 document.onkeydown = function (e) {
     var keyCode = event.which
     if (keyCode === 37) {
         mars.position.x -= 0.1
+        controls.autoRotate = true
+        controls.autoRotateSpeed = +1
     }
     if (keyCode === 39) {
         mars.position.x += 0.1
+        controls.autoRotate = true
+        controls.autoRotateSpeed = -1
     }
-    if (keyCode === 38) {
-        mars.position.y += 0.1
-    }
-    if (keyCode === 40) {
-        mars.position.y -= 0.1
-    }
+    // if (keyCode === 38) {
+    //     mars.position.y += 0.1
+    // }
+    // if (keyCode === 40) {
+    //     mars.position.y -= 0.1
+    // }
+}
+
+document.onkeyup = function (e) {
+    controls.autoRotate = false
 }
 
 // ------------------------- Clock -------------------------
@@ -230,12 +278,15 @@ const clock = new THREE.Clock()
 // ------------------------- Tick function -------------------------
 const tick = () => {
     const elapsedTime = clock.getElapsedTime()
+    mesh2.position.z = Math.sin( elapsedTime * 0.25 ) * 0.5
+    mesh2.position.x = Math.cos( elapsedTime * 0.15 ) * 1
+    mesh2.position.y = - Math.cos( elapsedTime * 0.35 ) * 0.25
 
     // Render
     renderer.render(scene, camera)
 
     // Controls
-    // controls.update()
+    controls.update()
 
     // Call tick again on the next frame
     window.requestAnimationFrame(tick)
