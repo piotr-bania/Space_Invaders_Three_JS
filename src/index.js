@@ -72,14 +72,14 @@ const fog = new THREE.Fog('#7161F5', 1, 5)
 scene.fog = fog
 
 // ------------------------- HDRI -------------------------
-// import hdri from './hdri/nebula-003-demo.hdr'
+import hdri from './hdri/nebula-003-demo.hdr'
 
-// new RGBELoader()
-//     .load(hdri, function (texture) {
-//         texture.mapping = THREE.EquirectangularReflectionMapping
-//         scene.environment = texture
-//         scene.background = texture
-//     })
+new RGBELoader()
+    .load(hdri, function (texture) {
+        texture.mapping = THREE.EquirectangularReflectionMapping
+        scene.environment = texture
+        scene.background = texture
+    })
 
 // ------------------------- Galaxy -------------------------
 const parameters = {}
@@ -343,6 +343,16 @@ function createSpaceInvader() {
 const finalSpaceInvader = createSpaceInvader()
 finalSpaceInvader.position.set(0, 0, 0)
 scene.add(finalSpaceInvader)
+
+// // Animation
+// gsap.to(finalSpaceInvader.rotation, {
+//     duration: 100,
+//     delay: 0,
+//     z: 5,
+//     x: 3,
+//     y: 8,
+//     repeat: -1
+// })
 
 
 // ------------------------- Object -------------------------
